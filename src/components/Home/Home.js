@@ -1,5 +1,13 @@
 import './Home.css'
 export const Home = (props) => {
+    //Вычисляем отклонения курса
+    const deviation = (val, prev) => {
+        const onePercent = prev * 0.01;
+        const todayPercent = val / onePercent;
+        const result = todayPercent > 100 ? todayPercent - 100 : todayPercent - 100;
+        return result.toFixed(2);
+    }
+    debugger;
     return <div className="table">
         <table border="1">
             <thead>
@@ -11,12 +19,15 @@ export const Home = (props) => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Ячейка 3</td>
-                    <td>Ячейка 4</td>
-                    <td>Ячейка 5</td>
-                    <td>Ячейка 6</td>
-                </tr>
+                {props.today === undefined ? null : props.today.map(e => {
+                    const riseOrFall = deviation(e.Value, e.Previous)
+                    return <tr key={e.ID}>
+                        <td>{e.CharCode}</td>
+                        <td>{e.NumCode}</td>
+                        <td>{e.Value}</td>
+                        <td style={riseOrFall >= 0 ? { color: 'green' } : { color: 'red' }}>{riseOrFall}</td>
+                    </tr>
+                })}
             </tbody>
         </table>
     </div>
