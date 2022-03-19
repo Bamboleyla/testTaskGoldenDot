@@ -6,3 +6,7 @@
 th, td {
     padding: 0px 10px;
 }
+
+tr:hover {
+    background-color: #33CDC7;
+}

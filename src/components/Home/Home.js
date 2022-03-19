@@ -1,4 +1,6 @@
+import Tippy from '@tippyjs/react';
 import './Home.css'
+import 'tippy.js/dist/tippy.css'
 export const Home = (props) => {
     //Вычисляем отклонения курса
     const deviation = (val, prev) => {
@@ -21,14 +23,16 @@ export const Home = (props) => {
             <tbody>
                 {props.today === undefined ? null : props.today.map(e => {
                     const riseOrFall = deviation(e.Value, e.Previous)
-                    return <tr key={e.ID}>
-                        <td>{e.CharCode}</td>
-                        <td>{e.NumCode}</td>
-                        <td>{e.Value}</td>
-                        <td style={riseOrFall >= 0 ? { color: 'green' } : { color: 'red' }}>{riseOrFall}</td>
-                    </tr>
+                    return <Tippy content={e.Name}>
+                        <tr key={e.ID}>
+                            <td>{e.CharCode}</td>
+                            <td>{e.NumCode}</td>
+                            <td>{e.Value}</td>
+                            <td style={riseOrFall >= 0 ? { color: 'green' } : { color: 'red' }}>{riseOrFall}</td>
+                        </tr>
+                    </Tippy>
                 })}
             </tbody>
         </table>
-    </div>
+    </div >
 }
