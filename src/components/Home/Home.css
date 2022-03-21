@@ -3,6 +3,10 @@
     margin: 0 auto;
 }
 
+table {
+    margin: 50px auto 0px auto;
+}
+
 th, td {
     padding: 0px 10px;
 }
