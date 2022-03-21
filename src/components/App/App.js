@@ -30,9 +30,15 @@ export const App = () => {
 
   let changeUrl = (id) => {
     navigate("load", { replace: true });
-    console.log('todayDate', tenDayValue);
     const result = valuteAPI.getTenDays(tenDayValue);
-    console.log('итого', result);
+    result.then(res => {
+      for (let key in res.Valute) {
+        if (res.Valute[key].ID === id) {
+          console.log('tenDaysValue', res.Valute[key]);
+        }
+      }
+    }
+    );
     //navigate("./ten", { replace: true });
   };
   return <div>

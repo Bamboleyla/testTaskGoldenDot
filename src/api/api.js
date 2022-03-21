@@ -8,14 +8,15 @@ const instance = axios.create({
 
 //Функция которая приводит дату в удобный формат для запроса
 const formateDate = (date) => {
-    const mount = date.getMonth() > 9 ? date.getMonth() : `0${date.getMonth()}`
-    const day = date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`
-    return `${date.getFullYear()}/${mount}/${day}`
+    const transformDate = new Date(date);
+    let mount = transformDate.getMonth() + 1;
+    mount = mount > 9 ? mount : `0${mount}`;
+    const day = transformDate.getDate() > 9 ? transformDate.getDate() : `0${transformDate.getDate()}`
+    return `${transformDate.getFullYear()}/${mount}/${day}`
 }
 
 const addValue = (val, newVal) => {
     for (let key in val.Valute) {
-        val.Valute[key][formateDate(newVal.Date)] = newVal.Valute[key].Value;
         val.Valute[key][formateDate(newVal.PreviousDate)] = newVal.Valute[key].Previous;
     }
     val.lastDate = newVal.PreviousDate;
@@ -25,14 +26,13 @@ export const valuteAPI = {
     getToday() {
         return instance.get(`daily_json.js`).then(response => response.data)
     },
-    getTenDays(value) {
-        let lastDate = new Date(value.PreviousDate);
-        value.lastDate = lastDate - (24 * 60 * 60 * 1000);
-        let copyValue = _.cloneDeep(value);
+    async getTenDays(value) {
+        let copy = _.cloneDeep(value);
+        copy.lastDate = value.PreviousDate;
         for (let i = 3; i <= 10; i++) {
-            console.log('запрос', `archive/${formateDate(new Date(value.lastDate))}/daily_json.js`)
-            instance.get(`archive/${formateDate(new Date(value.lastDate))}/daily_json.js`).then(res => addValue(copyValue, res))
-            console.log(` запрос ${formateDate(new Date(value.lastDate))} обработан copyValue=`, copyValue);
-        }
+            const res = await instance.get(`archive/${formateDate(copy.lastDate)}/daily_json.js`);
+            addValue(copy, res.data);
+        };
+        return copy;
     }
 }
