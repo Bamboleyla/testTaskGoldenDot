@@ -15,9 +15,15 @@ const formateDate = (date) => {
     return `${transformDate.getFullYear()}/${mount}/${day}`
 }
 
+//Мутирует val создовая в нем массив history в каждой валюте, добавляя в неё пары дата : курс
 const addValue = (val, newVal) => {
     for (let key in val.Valute) {
-        val.Valute[key][formateDate(newVal.PreviousDate)] = newVal.Valute[key].Previous;
+        if (val.Valute[key].history === undefined) {
+            val.Valute[key].history = [];
+            val.Valute[key].history.push([val.Date, val.Valute[key].Value]);
+            val.Valute[key].history.push([val.PreviousDate, val.Valute[key].Previous]);
+        }
+        val.Valute[key].history.push([newVal.PreviousDate, newVal.Valute[key].Previous]);
     }
     val.lastDate = newVal.PreviousDate;
 }

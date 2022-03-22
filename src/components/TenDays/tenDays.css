@@ -1,0 +1,15 @@
+.message {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    background-color: rgb(208, 224, 238);
+    border-radius: 10px;
+    border: 2px solid;
+    padding: 10px;
+    min-width: 250px;
+}
+
+.close {
+    text-align: right;
+    color: red;
+}

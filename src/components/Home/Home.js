@@ -3,6 +3,7 @@ import './Home.css'
 import 'tippy.js/dist/tippy.css'
 import { Outlet } from 'react-router-dom';
 export const Home = (props) => {
+
     //Вычисляем отклонения курса
     const deviation = (val, prev) => {
         const onePercent = prev * 0.01;
@@ -10,6 +11,7 @@ export const Home = (props) => {
         const result = todayPercent > 100 ? todayPercent - 100 : todayPercent - 100;
         return result.toFixed(2);
     };
+
     return <div className="table">
         <table border="1">
             <thead>
