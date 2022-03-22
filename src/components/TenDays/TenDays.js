@@ -2,7 +2,6 @@ import { NavLink } from 'react-router-dom';
 import './tenDays.css'
 
 export const TenDays = (props) => {
-    debugger;
     return <div className="message">
         <NavLink to='/'>
             <div className='close'>X</div>

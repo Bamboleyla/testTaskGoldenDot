@@ -10,6 +10,7 @@ export const App = () => {
   const [tenDay, setTenDay] = useState();
   const [valute, setValute] = useState();
 
+  //Предзагрузка данных курсов валют за 10 рабочих дней
   const tenDayData = (data) => valuteAPI.getTenDays(data).then(res => setTenDay(res));
 
   //Получаем курсы валют на сегодня и упаковываем их в массив
@@ -32,7 +33,6 @@ export const App = () => {
   let changeUrl = (id) => {
     for (let key in tenDay.Valute) {
       if (tenDay.Valute[key].ID === id) {
-        console.log('tenDaysValue', tenDay.Valute[key]);
         setValute(tenDay.Valute[key]);
       }
     }
